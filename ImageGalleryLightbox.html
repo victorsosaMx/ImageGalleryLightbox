@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageGalleryLightbox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .gallery img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 5px solid #fff;
+            border-radius: 5px;
+        }
+        .lightbox.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox:target {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox:target img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 30px;
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Galería de Imágenes con Lightbox</h1>
+    <div class="gallery">
+        <img src="images/1.jpg" alt="images/n 1" data-lightbox="images/1.jpg">
+        <img src="images/2.jpg" alt="images/n 2" data-lightbox="images/2.jpg">
+        <img src="images/3.jpg" alt="images/n 3" data-lightbox="images/3.jpg">
+        <img src="images/4.jpg" alt="images/n 4" data-lightbox="images/4.jpg">
+        <img src="images/5.jpg" alt="images/n 5" data-lightbox="images/5.jpg">
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <a href="#" class="close">&times;</a>
+        <img src="#" alt="Lightbox Image">
+    </div>
+
+    <script>
+        const galleryImages = document.querySelectorAll('.gallery img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = lightbox.querySelector('img');
+        const closeBtn = lightbox.querySelector('.close');
+
+        galleryImages.forEach(image => {
+            image.addEventListener('click', () => {
+                const src = image.getAttribute('data-lightbox');
+                lightboxImage.setAttribute('src', src);
+                lightbox.classList.add('show');
+            });
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            lightbox.classList.remove('show');
+        });
+    </script>
+</body>
+</html>
